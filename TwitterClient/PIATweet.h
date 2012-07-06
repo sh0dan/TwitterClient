@@ -10,4 +10,9 @@
 
 @interface PIATweet : NSObject
 
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *screenName;
+@property (nonatomic, strong) NSString *tweetText;
+@property (nonatomic, strong) UIImage *userPicture;
+
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "PIAAppDelegate.h"
+#import "PIATwitterDataSource.h"
+#import "PIATweetListViewController.h"
 
 @implementation PIAAppDelegate
 
@@ -14,7 +16,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    
+    PIATweetListViewController *controller = (PIATweetListViewController *)navigationController.topViewController;
+    controller.dataSource = [[PIATwitterDataSource alloc] init];
     return YES;
 }
 							

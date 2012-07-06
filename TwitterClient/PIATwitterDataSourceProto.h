@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const PIATweetsUpdateStartedNotification;
+extern NSString * const PIATweetsUserTimelineUpdatedNotification;
+extern NSString * const PIATweetsUserProfileUpdatedNotification;
+
+@class PIATweet;
 @protocol PIATwitterDataSourceProto <NSObject>
+
+- (void)getOwnTimeline;
+- (void)getUserTimeline:(NSString *)screenName;
+- (NSMutableDictionary *)readUserProfile;
+
+- (NSInteger)tweetCount;
+- (NSUInteger)indexOfTweet:(PIATweet *)recipe;
+- (PIATweet *)tweetAtIndex:(NSInteger)index;
 
 @end

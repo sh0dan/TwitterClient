@@ -10,4 +10,6 @@
 
 @implementation PIATweet
 
+@synthesize screenName, name, tweetText, userPicture;
+
 @end

@@ -14,7 +14,11 @@
 		0E2B125D159B033C007E3115 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B125C159B033C007E3115 /* main.m */; };
 		0E2B1261159B033C007E3115 /* PIAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B1260159B033C007E3115 /* PIAAppDelegate.m */; };
 		0E2B1264159B033C007E3115 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E2B1262159B033C007E3115 /* MainStoryboard.storyboard */; };
-		0E2B1267159B033C007E3115 /* PIAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B1266159B033C007E3115 /* PIAViewController.m */; };
+		0E2B126E159B098A007E3115 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2B126D159B098A007E3115 /* Twitter.framework */; };
+		0E2B1275159B2595007E3115 /* PIATweetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B1274159B2595007E3115 /* PIATweetListViewController.m */; };
+		0E2B127C159B34BE007E3115 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2B127B159B34BE007E3115 /* Accounts.framework */; };
+		0E2B1282159B3ACD007E3115 /* PIATwitterDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B1281159B3ACD007E3115 /* PIATwitterDataSource.m */; };
+		0E34E807159C3E5C00842E3D /* PIATweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E34E806159C3E5C00842E3D /* PIATweet.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,15 +26,22 @@
 		0E2B1250159B033C007E3115 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0E2B1252159B033C007E3115 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E2B1254159B033C007E3115 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		0E2B1258159B033C007E3115 /* TwitterClient-Info.plist */ = {isa = PBXFileReference; path = "TwitterClient-Info.plist"; sourceTree = "<group>"; };
+		0E2B1258159B033C007E3115 /* TwitterClient-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TwitterClient-Info.plist"; sourceTree = "<group>"; };
 		0E2B125A159B033C007E3115 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0E2B125C159B033C007E3115 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0E2B125E159B033C007E3115 /* TwitterClient-Prefix.pch */ = {isa = PBXFileReference; path = "TwitterClient-Prefix.pch"; sourceTree = "<group>"; };
-		0E2B125F159B033C007E3115 /* PIAAppDelegate.h */ = {isa = PBXFileReference; path = PIAAppDelegate.h; sourceTree = "<group>"; };
+		0E2B125E159B033C007E3115 /* TwitterClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TwitterClient-Prefix.pch"; sourceTree = "<group>"; };
+		0E2B125F159B033C007E3115 /* PIAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIAAppDelegate.h; sourceTree = "<group>"; };
 		0E2B1260159B033C007E3115 /* PIAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIAAppDelegate.m; sourceTree = "<group>"; };
 		0E2B1263159B033C007E3115 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		0E2B1265159B033C007E3115 /* PIAViewController.h */ = {isa = PBXFileReference; path = PIAViewController.h; sourceTree = "<group>"; };
-		0E2B1266159B033C007E3115 /* PIAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIAViewController.m; sourceTree = "<group>"; };
+		0E2B126D159B098A007E3115 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		0E2B1273159B2595007E3115 /* PIATweetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIATweetListViewController.h; sourceTree = "<group>"; };
+		0E2B1274159B2595007E3115 /* PIATweetListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIATweetListViewController.m; sourceTree = "<group>"; };
+		0E2B127B159B34BE007E3115 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		0E2B1280159B3ACD007E3115 /* PIATwitterDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIATwitterDataSource.h; sourceTree = "<group>"; };
+		0E2B1281159B3ACD007E3115 /* PIATwitterDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIATwitterDataSource.m; sourceTree = "<group>"; };
+		0E34E805159C3E5C00842E3D /* PIATweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIATweet.h; sourceTree = "<group>"; };
+		0E34E806159C3E5C00842E3D /* PIATweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIATweet.m; sourceTree = "<group>"; };
+		0E34E808159C483500842E3D /* PIATwitterDataSourceProto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIATwitterDataSourceProto.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +49,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E2B127C159B34BE007E3115 /* Accounts.framework in Frameworks */,
+				0E2B126E159B098A007E3115 /* Twitter.framework in Frameworks */,
 				0E2B1251159B033C007E3115 /* UIKit.framework in Frameworks */,
 				0E2B1253159B033C007E3115 /* Foundation.framework in Frameworks */,
 				0E2B1255159B033C007E3115 /* CoreGraphics.framework in Frameworks */,
@@ -67,6 +80,8 @@
 		0E2B124F159B033C007E3115 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0E2B127B159B34BE007E3115 /* Accounts.framework */,
+				0E2B126D159B098A007E3115 /* Twitter.framework */,
 				0E2B1250159B033C007E3115 /* UIKit.framework */,
 				0E2B1252159B033C007E3115 /* Foundation.framework */,
 				0E2B1254159B033C007E3115 /* CoreGraphics.framework */,
@@ -77,12 +92,15 @@
 		0E2B1256159B033C007E3115 /* TwitterClient */ = {
 			isa = PBXGroup;
 			children = (
+				0E2B1277159B30BC007E3115 /* DataSource */,
 				0E2B125F159B033C007E3115 /* PIAAppDelegate.h */,
 				0E2B1260159B033C007E3115 /* PIAAppDelegate.m */,
 				0E2B1262159B033C007E3115 /* MainStoryboard.storyboard */,
-				0E2B1265159B033C007E3115 /* PIAViewController.h */,
-				0E2B1266159B033C007E3115 /* PIAViewController.m */,
 				0E2B1257159B033C007E3115 /* Supporting Files */,
+				0E2B1273159B2595007E3115 /* PIATweetListViewController.h */,
+				0E2B1274159B2595007E3115 /* PIATweetListViewController.m */,
+				0E34E805159C3E5C00842E3D /* PIATweet.h */,
+				0E34E806159C3E5C00842E3D /* PIATweet.m */,
 			);
 			path = TwitterClient;
 			sourceTree = "<group>";
@@ -96,6 +114,16 @@
 				0E2B125E159B033C007E3115 /* TwitterClient-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0E2B1277159B30BC007E3115 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				0E2B1280159B3ACD007E3115 /* PIATwitterDataSource.h */,
+				0E2B1281159B3ACD007E3115 /* PIATwitterDataSource.m */,
+				0E34E808159C483500842E3D /* PIATwitterDataSourceProto.h */,
+			);
+			name = DataSource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +191,9 @@
 			files = (
 				0E2B125D159B033C007E3115 /* main.m in Sources */,
 				0E2B1261159B033C007E3115 /* PIAAppDelegate.m in Sources */,
-				0E2B1267159B033C007E3115 /* PIAViewController.m in Sources */,
+				0E2B1275159B2595007E3115 /* PIATweetListViewController.m in Sources */,
+				0E2B1282159B3ACD007E3115 /* PIATwitterDataSource.m in Sources */,
+				0E34E807159C3E5C00842E3D /* PIATweet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +305,7 @@
 				0E2B126C159B033C007E3115 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

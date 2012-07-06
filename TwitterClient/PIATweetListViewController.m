@@ -7,38 +7,77 @@
 //
 
 #import "PIATweetListViewController.h"
+#import <Twitter/Twitter.h>
 
 @interface PIATweetListViewController ()
+
+- (void)twitterDataUpdateStarted;
+- (void)setupProfileInfo:(NSDictionary *)info;
+- (void)updateTable;
 
 @end
 
 @implementation PIATweetListViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+@synthesize composeTweetButton, homeTimelineButton, tableHeaderView, tableView,
+tweetsCount, tweetsLabel, followingCount, followingLabel, followersCount, followersLabel, 
+dataSource = _dataSource;
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userTimelineUpdated:)
+                                                 name:PIATweetsUserTimelineUpdatedNotification
+                                               object:self.dataSource];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userProfileUpdated:)
+                                                 name:PIATweetsUserProfileUpdatedNotification
+                                               object:self.dataSource];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(twitterDataUpdateStarted) 
+                                                 name:PIATweetsUpdateStartedNotification 
+                                               object:self.dataSource];
+    self.title = @"Loading data...";
+    
+    if (0 == [self.dataSource tweetCount]) {
+        [self.dataSource getOwnTimeline];
     }
-    return self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:PIATweetsUserTimelineUpdatedNotification 
+                                                  object:self.dataSource];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:PIATweetsUserProfileUpdatedNotification 
+                                                  object:self.dataSource];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:PIATweetsUpdateStartedNotification 
+                                                  object:self.dataSource];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    self.composeTweetButton = nil;
+    self.tableView = nil;
+    self.tableHeaderView = nil;
+    self.tweetsLabel = nil;
+    self.tweetsCount = nil;
+    self.followersLabel = nil;
+    self.followersCount = nil;
+    self.followingLabel = nil;
+    self.followingCount = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -50,27 +89,92 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [self.dataSource tweetCount];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
+    if (nil == cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica-neuve" size:10.0]];
+    
+    PIATweet *tweet = [self.dataSource tweetAtIndex:indexPath.row];
+
+    cell.imageView.image = [tweet userPicture];
+    cell.textLabel.text = [tweet name];
+    cell.detailTextLabel.text = [tweet tweetText];
     
     return cell;
 }
+
+- (void)userTimelineUpdated:(NSNotification *)notification {
+    NSLog(@"user timeline updated");
+    [self performSelectorOnMainThread:@selector(updateTable) withObject:nil waitUntilDone:NO];
+}
+
+- (void)updateTable {
+    [self.tableView reloadData];
+}
+
+- (void)userProfileUpdated:(NSNotification *)notification {
+    NSLog(@"user profile updated");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.title = [NSString stringWithFormat:@"@%@", [notification.userInfo valueForKey:@"screen_name"]];
+        [self setupProfileInfo:notification.userInfo];
+    });
+}
+
+- (void)setupProfileInfo:(NSDictionary *)info {
+    [self.tweetsLabel setEnabled:YES];
+    [self.tweetsCount setEnabled:YES];
+    [self.followersLabel setEnabled:YES];
+    [self.followersCount setEnabled:YES];
+    [self.followingLabel setEnabled:YES];
+    [self.followingCount setEnabled:YES];
+    [self.tweetsCount setText:[NSString stringWithFormat:@"%@", [info valueForKey:@"statuses_count"]]];
+    [self.followersCount setText:[NSString stringWithFormat:@"%@", [info valueForKey:@"followers_count"]]];
+    [self.followingCount setText:[NSString stringWithFormat:@"%@", [info valueForKey:@"friends_count"]]];
+}
+
+- (void)twitterDataUpdateStarted {
+    NSLog(@"twitterDataUpdateStarted");
+}
+
+- (IBAction)returnToHomeTimelineAction:(UIBarButtonItem *)sender {
+    [self.dataSource getOwnTimeline];
+}
+
+- (IBAction)composeTweetAction:(UIBarButtonItem *)sender {
+    [self.tableView reloadData];
+    if ([TWTweetComposeViewController canSendTweet]) {
+        TWTweetComposeViewController *twitterViewController = [[TWTweetComposeViewController alloc] init];
+        twitterViewController.completionHandler = ^(TWTweetComposeViewControllerResult result) { 
+            if (result == TWTweetComposeViewControllerResultDone) {
+                [self.dataSource getOwnTimeline];
+                [self dismissModalViewControllerAnimated:YES];
+            }
+        };
+        [self presentViewController:twitterViewController animated:YES completion:NULL];
+    } else {
+        UIAlertView *errorMessage = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                               message:@"Can`t send tweet. Try later." 
+                                                              delegate:nil 
+                                                     cancelButtonTitle:@"Ok" 
+                                                     otherButtonTitles:nil];
+        [errorMessage show];
+    }
+}
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -115,13 +219,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSLog(@"***start updating");
+    NSString *selectedScreenName = [[self.dataSource tweetAtIndex:indexPath.row] screenName];
+    [self.dataSource getUserTimeline:selectedScreenName];
 }
 
 @end

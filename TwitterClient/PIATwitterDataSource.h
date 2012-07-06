@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PIATwitterDataSourceProto.h"
 
-@interface PIATwitterDataSource : NSObject
+@interface PIATwitterDataSource : NSObject <PIATwitterDataSourceProto>
+
+@property (nonatomic, strong) NSMutableArray *tweetSet;
+@property (nonatomic, strong) NSMutableDictionary *userProfile;
 
 @end
